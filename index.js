@@ -34,11 +34,13 @@ const characters = require('./data/swapi');
  *
  */
 
-function listAllCharacters() {}
+function listAllCharacters(arr) {
+  return arr.map(x => x.name)
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
-// console.log(listAllCharacters([]));
-// console.log(listAllCharacters(characters));
+console.log(listAllCharacters([]));
+console.log(listAllCharacters(characters));
 
 /**
  * averageHeightOfAllCharacters()
@@ -51,10 +53,12 @@ function listAllCharacters() {}
  * No example for this one. You should be able to find the average at this point
  */
 
-function averageHeightOfAllCharacters() {}
+function averageHeightOfAllCharacters(arr) {
+  return arr.map(x => Number(x.height)).reduce((a,b) => a+b) / arr.length;
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-//console.log(averageHeightOfAllCharacters(characters))
+console.log(averageHeightOfAllCharacters(characters))
 
 /**
  * countByEyeColor()
@@ -76,11 +80,16 @@ function averageHeightOfAllCharacters() {}
  *
  */
 
-function countByEyeColor() {}
+function countByEyeColor(arr) {
+  return arr.reduce((obj,cur) => {
+    obj[cur.eye_color] =  obj[cur.eye_color] ? ++obj[cur.eye_color] : 1 ;
+    return obj
+  } ,{})
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
-// console.log(countByEyeColor([]))
-// console.log(countByEyeColor(characters));
+console.log(countByEyeColor([]))
+console.log(countByEyeColor(characters));
 
 /**
  * getAllCharactersCreatedAfterYear()
@@ -106,10 +115,12 @@ function countByEyeColor() {}
  *
  */
 
-function getAllCharactersCreatedAfterYear() {}
+function getAllCharactersCreatedAfterYear(arr,date) {
+  return arr.filter(x => Number(x.created.slice(0,4)) >= date).map(x => x.name)
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-// console.log(getAllCharactersCreatedAfterYear(characters, 2014));
+ console.log(getAllCharactersCreatedAfterYear(characters, 2014));
 
 /** getCharactersInMovie()
  *  ----------------------
@@ -138,7 +149,14 @@ function getAllCharactersCreatedAfterYear() {}
    }
  */
 
-function getCharactersInMovie() {}
+function getCharactersInMovie(arr,title) {
+  return arr
+    .filter(x => x.films.map(film => film.toLowerCase()).includes(title))
+    .reduce((obj,cur) => {
+       obj[cur.id] = cur.name 
+       return obj
+    }, {})
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-// console.log(getCharactersInMovie(characters, 'return of the jedi'));
+ console.log(getCharactersInMovie(characters, 'return of the jedi'));
